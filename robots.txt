@@ -1,0 +1,6 @@
+# robots.txt para Spotify Web Player Clone
+User-agent: *
+Allow: /
+
+# Ubicación del Sitemap
+Sitemap: https://seo-lexpin-aljndro-perez.vercel.app/sitemap.xml

@@ -1,308 +1,878 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="description" content=" Servicio de streaming de música para ti que te permite escuchar millones de canciones y podcasts en línea.">
-    <meta name="keywords" content="música, streaming, canciones, podcasts, playlists, artistas, álbumes, biblioteca">
-    <meta name="author" content="Alejandro Perez">
-    <meta name="copyright" content="© 2026 Alejandro Perez.">
-    <meta name="robots" content="index, follow">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org/",
-      "@type": "WebSite",
-      "name": "Spotify",
-      "url": "https://app_de_musica.com/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://app_de_musica.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify – Reproductor web: Música para todos</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="Escucha millones de canciones, álbumes y podcasts originales en línea gratis o con Spotify Premium.">
+  <meta name="keywords" content="Spotify, música online, streaming, playlists, canciones, podcasts, artistas, álbumes">
+  <meta name="author" content="Alejandro Pérez">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#121212">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://spotify-clone-lexpin.vercel.app/">
+  <meta property="og:title" content="Spotify – Reproductor web: Música para todos">
+  <meta property="og:description" content="Servicio de streaming de música para ti con millones de canciones y podcasts en línea.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200&h=630&fit=crop">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Spotify – Reproductor web: Música para todos">
+  <meta name="twitter:description" content="Servicio de streaming de música para ti con millones de canciones y podcasts en línea.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=1200&h=630&fit=crop">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512' fill='%231ed760'%3E%3Cpath d='M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm114.6 358.3c-4.5 7.4-14.2 9.8-21.6 5.3-59.2-36.2-133.7-44.4-221.5-24.3-8.3 1.9-16.7-3.4-18.6-11.7-1.9-8.3 3.4-16.7 11.7-18.6 96.3-22 178.9-12.7 244.7 27.7 7.4 4.5 9.8 14.2 5.3 21.6zm29.8-66.2c-5.7 9.2-17.7 12.2-26.9 6.5-67.8-41.7-171.2-53.8-251.4-29.4-10.4 3.1-21.5-2.8-24.7-13.2-3.1-10.4 2.8-21.5 13.2-24.7 91.5-27.8 205.5-14.4 283.3 33.9 9.2 5.7 12.2 17.7 6.5 26.9zm2.6-70.1c-81.3-48.3-215.3-52.7-293.1-29.1-12.5 3.8-25.9-3.3-29.7-15.8-3.8-12.5 3.3-25.9 15.8-29.7 89.2-27.1 237.7-22 331.4 33.6 11.3 6.7 15 21.3 8.3 32.6-6.7 11.4-21.3 15-32.7 8.4z'/%3E%3C/svg%3E">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
     }
-</script>
+    
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+    
+    .spotify-green {
+      color: #1ed760;
+    }
+    .bg-spotify-green {
+      background-color: #1ed760;
+    }
+    .bg-spotify-green:hover {
+      background-color: #1fdf64;
+    }
+    
+    /* Pulse animation for playing indicator */
+    @keyframes soundwave {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+    .wave-bar-1 { animation: soundwave 1s ease-in-out infinite; }
+    .wave-bar-2 { animation: soundwave 1.2s ease-in-out infinite 0.2s; }
+    .wave-bar-3 { animation: soundwave 0.8s ease-in-out infinite 0.4s; }
+  </style>
+
+  <!-- Schema.org Rich Snippet -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "MusicPlatform",
+    "name": "Spotify Web Player",
+    "url": "https://spotify-clone-lexpin.vercel.app/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://spotify-clone-lexpin.vercel.app/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 </head>
-<body class="bg-black text-white h-screen flex flex-col overflow-hidden font-sans">
+<body class="bg-black text-white h-screen flex flex-col overflow-hidden">
 
-    <!-- barra de navegacion  -->
-    <header class="h-16 bg-black px-6 flex items-center justify-between gap-6 z-30">
-        <!-- Logo -->
-        <i class="fa-brands fa-spotify text-white text-3xl"></i>
+  <!-- 1. BARRA DE NAVEGACIÓN SUPERIOR -->
+  <header class="h-16 bg-black px-4 sm:px-6 flex items-center justify-between gap-4 z-30 shrink-0">
+    <!-- Logo Spotify -->
+    <a href="#" class="flex items-center gap-2 text-white hover:opacity-90 transition">
+      <i class="fa-brands fa-spotify text-white text-3xl sm:text-4xl"></i>
+      <span class="font-bold text-xl tracking-tight hidden sm:inline">Spotify</span>
+    </a>
 
-        <!-- Buscador + Home -->
-        <div class="hidden md:flex items-center gap-3 mr-auto">
-            <!-- Botón Home -->
-            <button class="bg-zinc-800 rounded-full w-12 h-12 flex items-center justify-center text-white hover:scale-105 transition">
-                <i class="fa-solid fa-house text-xl"></i>
-            </button>
-            
-            <!-- Barra de Búsqueda -->
-            <div class="bg-zinc-800 rounded-full flex items-center px-4 h-12 w-96 gap-3 text-zinc-400 focus-within:ring-2 focus-within:ring-white">
-                <i class="fa-solid fa-magnifying-glass text-xl"></i>
-                <input type="text" placeholder="¿Qué quieres reproducir?" class="bg-transparent outline-none text-white w-full text-[17px]">
-            </div>
+    <!-- Buscador + Botón Inicio Central -->
+    <div class="flex items-center gap-2 sm:gap-3 flex-1 max-w-xl mx-2 sm:mx-6">
+      <button class="bg-zinc-800/90 hover:bg-zinc-800 text-white rounded-full w-11 h-11 flex items-center justify-center shrink-0 hover:scale-105 transition shadow-sm" title="Inicio">
+        <i class="fa-solid fa-house text-lg"></i>
+      </button>
+
+      <div class="bg-zinc-800/90 hover:bg-zinc-800/70 focus-within:bg-zinc-800 focus-within:ring-2 focus-within:ring-white rounded-full flex items-center px-4 h-11 w-full gap-3 text-zinc-400 transition">
+        <i class="fa-solid fa-magnifying-glass text-lg"></i>
+        <input 
+          id="searchInput" 
+          type="text" 
+          placeholder="¿Qué quieres reproducir?" 
+          class="bg-transparent outline-none text-white text-sm w-full placeholder:text-zinc-400"
+        />
+        <div class="hidden sm:flex items-center border-l border-zinc-700 pl-3 text-xs text-zinc-400">
+          <i class="fa-solid fa-folder-open text-sm hover:text-white cursor-pointer" title="Explorar"></i>
         </div>
-
-        <!-- Botones de sesión -->
-        <div class="flex items-center gap-4">
-            <button class="hidden md:block text-zinc-400 font-bold text-sm hover:text-white">Regístrate</button>
-            <button class="bg-white text-black font-bold px-7 h-12 rounded-full hover:scale-105 transition">Iniciar sesión</button>
-        </div>
-    </header>
-
-    <!--CONTENEDOR CENTRAL -->
-    <div class="flex-1 grid grid-cols-1 md:grid-cols-[280px_1fr_280px] gap-2 overflow-hidden">
-        
-       <!-- SIDEBAR IZQUIERDO -->
-        <aside class="hidden md:flex flex-col gap-2 w-72 bg-black text-zinc-400 px-2 h-screen select-none">
-
-            <!-- Sección Biblioteca (Contenedor principal) -->
-            <div class="bg-zinc-900 rounded-lg p-3 flex-1 flex flex-col overflow-hidden">
-                
-                <!-- Header de Tu Biblioteca -->
-                <div class="flex items-center justify-between px-2 py-2 mb-2">
-                    <button class="flex items-center gap-3 font-bold text-white ">
-                        <span>Tu biblioteca</span>
-                    </button>
-                    <button class="hover:bg-zinc-800 p-1 rounded-full text-zinc-400 hover:text-white">
-                        <i class="fa-solid fa-plus text-base"></i>
-                    </button>
-                </div>
-
-                <!-- Chips / Filtros superiores -->
-                <div class="flex gap-2 mb-3 px-2">
-                    <span class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs px-3 py-1.5 rounded-full cursor-pointer transition">Playlists</span>
-                    <span class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs px-3 py-1.5 rounded-full cursor-pointer transition">Artistas</span>
-                </div>
-
-                <!-- Lista de Playlists (Con scroll independiente) -->
-                <div class="flex-1 overflow-y-auto flex flex-col gap-1 pr-1">
-                    
-                    <!-- Item 1: Playlist -->
-                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/60 cursor-pointer transition group">
-                        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100&h=100&fit=crop" loading="lazy" class="w-12 h-12 rounded object-cover flex-shrink-0" alt="Mix">
-                        <div class="flex flex-col min-w-0">
-                            <span class="text-white text-sm font-medium truncate">Éxitos de hoy</span>
-                            <span class="text-xs text-zinc-400 truncate">Playlist • Spotify</span>
-                        </div>
-                    </div>
-
-                    <!-- Item 2: Canciones que te gustan -->
-                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/60 cursor-pointer transition group">
-                        <div class="w-12 h-12 rounded bg-gradient-to-br from-indigo-600 to-blue-300 flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-heart text-white text-sm"></i>
-                        </div>
-                        <div class="flex flex-col min-w-0">
-                            <span class="text-white text-sm font-medium truncate">Tus me gusta</span>
-                            <span class="text-xs text-zinc-400 truncate">Playlist • 142 canciones</span>
-                        </div>
-                    </div>
-
-                    <!-- Item 3: Playlist -->
-                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/60 cursor-pointer transition group">
-                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" loading="lazy" class="w-12 h-12 rounded object-cover flex-shrink-0" alt="Mix">
-                        <div class="flex flex-col min-w-0">
-                            <span class="text-white text-sm font-medium truncate">Rock Clásico 80s</span>
-                            <span class="text-xs text-zinc-400 truncate">Playlist • Carlos</span>
-                        </div>
-                    </div>
-
-                    <!-- Item 4: Playlist -->
-                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/60 cursor-pointer transition group">
-                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&h=100&fit=crop" loading="lazy" class="w-12 h-12 rounded object-cover flex-shrink-0" alt="Mix">
-                        <div class="flex flex-col min-w-0">
-                            <span class="text-white text-sm font-medium truncate">Daily Mix 1</span>
-                            <span class="text-xs text-zinc-400 truncate">Playlist • Spotify</span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </aside>
-
-        <!-- CONTENIDO DEL MEDIO (Home) -->
-        <main class="bg-zinc-900 rounded-lg overflow-y-auto p-6 flex flex-col gap-6">
-            <h1 class="text-2xl font-bold tracking-tight">Musica para ti</h1>
-
-            <!-- mini tarjetas -->
-            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="flex items-center bg-zinc-800/40 hover:bg-zinc-800 rounded-md overflow-hidden cursor-pointer transition">
-                    <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100&h=100&fit=crop" loading="lazy" class="w-16 h-16 object-cover" alt="Mix">
-                    <span class="px-4 font-bold text-sm">Éxitos de hoy</span>
-                </div>
-                <div class="flex items-center bg-zinc-800/40 hover:bg-zinc-800 rounded-md overflow-hidden cursor-pointer transition">
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" loading="lazy" class="w-16 h-16 object-cover" alt="Rock">
-                    <span class="px-4 font-bold text-sm">Rock Classics</span>
-                </div>
-                <div class="flex items-center bg-zinc-800/40 hover:bg-zinc-800 rounded-md overflow-hidden cursor-pointer transition">
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" loading="lazy" class="w-16 h-16 object-cover" alt="Rock">
-                    <span class="px-4 font-bold text-sm">Rock Classics</span>
-                </div>
-                <div class="flex items-center bg-zinc-800/40 hover:bg-zinc-800 rounded-md overflow-hidden cursor-pointer transition">
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" loading="lazy" class="w-16 h-16 object-cover" alt="Rock">
-                    <span class="px-4 font-bold text-sm">Rock Classics</span>
-                </div>
-                <div class="flex items-center bg-zinc-800/40 hover:bg-zinc-800 rounded-md overflow-hidden cursor-pointer transition">
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" loading="lazy" class="w-16 h-16 object-cover" alt="Rock">
-                    <span class="px-4 font-bold text-sm">Rock Classics</span>
-                </div>
-                <div class="flex items-center bg-zinc-800/40 hover:bg-zinc-800 rounded-md overflow-hidden cursor-pointer transition">
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" loading="lazy" class="w-16 h-16 object-cover" alt="Rock">
-                    <span class="px-4 font-bold text-sm">Rock Classics</span>
-                </div>
-            </div>
-
-            <!-- titulo de tarjetas -->
-            <section class="mt-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold hover:underline cursor-pointer">Hecho para ti</h2>
-                    <span class="text-xs font-bold text-zinc-400 hover:underline cursor-pointer">Mostrar todo</span>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-                    <!-- Tarjeta 1 -->
-                    <div class="bg-zinc-800/40 hover:bg-zinc-800 p-4 rounded-lg cursor-pointer transition group flex flex-col gap-2">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&h=300&fit=crop" loading="lazy" alt="Cover" class="w-full aspect-square object-cover rounded-md shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <h3 class="font-bold text-sm truncate">Daily Mix 1</h3>
-                        <p class="text-xs text-zinc-400 line-clamp-2">Artistas principales y más descubrimientos.</p>
-                    </div>
-                    <!-- Tarjeta 2 -->
-                    <div class="bg-zinc-800/40 hover:bg-zinc-800 p-4 rounded-lg cursor-pointer transition group flex flex-col gap-2">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop" loading="lazy" alt="Cover" class="w-full aspect-square object-cover rounded-md shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <h3 class="font-bold text-sm truncate">Top Global</h3>
-                        <p class="text-xs text-zinc-400 line-clamp-2">Lo más escuchado en todo el mundo ahora mismo.</p>
-                    </div>
-
-                    <div class="bg-zinc-800/40 hover:bg-zinc-800 p-4 rounded-lg cursor-pointer transition group flex flex-col gap-2">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop" loading="lazy" alt="Cover" class="w-full aspect-square object-cover rounded-md shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <h3 class="font-bold text-sm truncate">Top Global</h3>
-                        <p class="text-xs text-zinc-400 line-clamp-2">Lo más escuchado en todo el mundo ahora mismo.</p>
-                    </div>
-
-                    <div class="bg-zinc-800/40 hover:bg-zinc-800 p-4 rounded-lg cursor-pointer transition group flex flex-col gap-2">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop" loading="lazy" alt="Cover" class="w-full aspect-square object-cover rounded-md shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <h3 class="font-bold text-sm truncate">Top Global</h3>
-                        <p class="text-xs text-zinc-400 line-clamp-2">Lo más escuchado en todo el mundo ahora mismo.</p>
-                    </div>
-
-                    <div class="bg-zinc-800/40 hover:bg-zinc-800 p-4 rounded-lg cursor-pointer transition group flex flex-col gap-2">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop" loading="lazy" alt="Cover" class="w-full aspect-square object-cover rounded-md shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <h3 class="font-bold text-sm truncate">Top Global</h3>
-                        <p class="text-xs text-zinc-400 line-clamp-2">Lo más escuchado en todo el mundo ahora mismo.</p>
-                    </div>
-
-                    <div class="bg-zinc-800/40 hover:bg-zinc-800 p-4 rounded-lg cursor-pointer transition group flex flex-col gap-2">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop" loading="lazy" alt="Cover" class="w-full aspect-square object-cover rounded-md shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <h3 class="font-bold text-sm truncate">Top Global</h3>
-                        <p class="text-xs text-zinc-400 line-clamp-2">Lo más escuchado en todo el mundo ahora mismo.</p>
-                    </div>
-
-                    <div class="bg-zinc-800/40 hover:bg-zinc-800 p-4 rounded-lg cursor-pointer transition group flex flex-col gap-2">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop" loading="lazy" alt="Cover" class="w-full aspect-square object-cover rounded-md shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <h3 class="font-bold text-sm truncate">Top Global</h3>
-                        <p class="text-xs text-zinc-400 line-clamp-2">Lo más escuchado en todo el mundo ahora mismo.</p>
-                    </div>
-
-                    <div class="bg-zinc-800/40 hover:bg-zinc-800 p-4 rounded-lg cursor-pointer transition group flex flex-col gap-2">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop" loading="lazy" alt="Cover" class="w-full aspect-square object-cover rounded-md shadow-lg">
-                            <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <h3 class="font-bold text-sm truncate">Top Global</h3>
-                        <p class="text-xs text-zinc-400 line-clamp-2">Lo más escuchado en todo el mundo ahora mismo.</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- SIDEBAR DERECHO -->
-        <aside class="hidden lg:flex flex-col gap-4 bg-zinc-900 rounded-lg p-4 overflow-y-auto text-sm text-zinc-400">
-            <div class="flex flex-col gap-2">
-                <div class="relative">
-                    <img src="https://i.scdn.co/image/ab67616d0000e1a34d22198f946d9b32f25fc263" loading="lazy" alt="Cover" class="w-full rounded-md">
-                    <button class="absolute bottom-2 right-2 bg-green-500 text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0"><i class="fa-solid fa-play"></i></button>
-                </div>
-                <h3 class="font-bold text-sm text-white ">FULANITO y MENGANITO</h3>
-                <p class="text-xs text-zinc-400 line-clamp-2">Lo más escuchado en todo el mundo ahora mismo.</p>
-            </div>
-
-            <div class="flex items-center justify-between font-bold text-white">
-                <span>Acerca del artista</span>
-                <i class="fa-solid fa-user-plus cursor-pointer"></i>
-            </div>
-            <div class="flex gap-3 items-start">
-                <div class="w-10 h-10 bg-zinc-700 rounded-full overflow-hidden shrink-0">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" loading="lazy" alt="Amigo">
-                </div>
-                <div>
-                    <p class="font-bold text-white text-xs">juanito y menganito</p>
-                    <p class="text-xs truncate w-36">Artista</p>
-                </div>
-            </div>
-        </aside>
-
+      </div>
     </div>
 
-    <!-- 3. REPRODUCTOR DE MÚSICA INFERIOR -->
-    <footer class="h-20 bg-black px-4 flex items-center justify-between border-t border-zinc-900 z-20 shrink-0">
-        <!-- Info de la canción -->
-        <div class="flex items-center gap-3 w-1/4">
-            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=60&h=60&fit=crop" loading="eager" class="w-14 h-14 rounded object-cover" alt="Song">
+    <!-- Botones de Usuario / Sesión -->
+    <div class="flex items-center gap-3">
+      <button class="hidden lg:block text-zinc-400 hover:text-white text-sm font-semibold transition px-2">
+        Premium
+      </button>
+      <button class="hidden md:block text-zinc-400 hover:text-white text-sm font-semibold transition px-2">
+        Soporte
+      </button>
+      <div class="h-6 w-px bg-zinc-800 hidden sm:block"></div>
+      <button class="hidden sm:block text-zinc-300 hover:text-white font-semibold text-sm hover:scale-105 transition px-2">
+        Regístrate
+      </button>
+      <button class="bg-white text-black font-bold text-xs sm:text-sm px-5 sm:px-7 h-10 sm:h-11 rounded-full hover:scale-105 transition shadow-sm hover:bg-zinc-200">
+        Iniciar sesión
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. CONTENEDOR CENTRAL GRID -->
+  <div class="flex-1 grid grid-cols-1 md:grid-cols-[280px_1fr] lg:grid-cols-[280px_1fr_290px] gap-2 px-2 overflow-hidden">
+    
+    <!-- SIDEBAR IZQUIERDO: TU BIBLIOTECA -->
+    <aside class="hidden md:flex flex-col gap-2 bg-zinc-900/90 rounded-lg p-3 overflow-hidden select-none border border-white/5">
+      
+      <!-- Cabecera Biblioteca -->
+      <div class="flex items-center justify-between px-2 py-1 mb-1">
+        <button class="flex items-center gap-3 font-bold text-zinc-300 hover:text-white transition">
+          <i class="fa-solid fa-book-bookmark text-xl text-zinc-400"></i>
+          <span class="text-sm">Tu biblioteca</span>
+        </button>
+        <div class="flex items-center gap-1">
+          <button class="hover:bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white transition" title="Crear playlist">
+            <i class="fa-solid fa-plus text-sm"></i>
+          </button>
+          <button class="hover:bg-zinc-800 p-2 rounded-full text-zinc-400 hover:text-white transition" title="Ver más">
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filtros Biblioteca -->
+      <div class="flex items-center gap-2 mb-2 px-1 overflow-x-auto">
+        <button class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3 py-1.5 rounded-full transition shrink-0">Playlists</button>
+        <button class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3 py-1.5 rounded-full transition shrink-0">Artistas</button>
+        <button class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3 py-1.5 rounded-full transition shrink-0">Álbumes</button>
+      </div>
+
+      <!-- Búsqueda y Orden en biblioteca -->
+      <div class="flex items-center justify-between px-2 py-1 text-zinc-400 text-xs">
+        <button class="hover:text-white p-1 rounded-full"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <div class="flex items-center gap-1 cursor-pointer hover:text-white">
+          <span>Recientes</span>
+          <i class="fa-solid fa-list text-[10px]"></i>
+        </div>
+      </div>
+
+      <!-- Lista de Playlists -->
+      <div id="playlistList" class="flex-1 overflow-y-auto flex flex-col gap-1 pr-1">
+        
+        <!-- Playlist 1: Tus me gusta -->
+        <div class="track-row flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/70 cursor-pointer transition group" data-title="Tus me gusta" data-artist="142 canciones" data-cover="heart">
+          <div class="w-12 h-12 rounded bg-gradient-to-br from-indigo-700 via-indigo-600 to-blue-400 flex items-center justify-center shrink-0 shadow">
+            <i class="fa-solid fa-heart text-white text-lg"></i>
+          </div>
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="text-white text-sm font-semibold truncate group-hover:text-[#1ed760] transition">Tus me gusta</span>
+            <span class="text-xs text-zinc-400 truncate">📌 Playlist • 142 canciones</span>
+          </div>
+          <div class="playing-bars hidden flex items-end gap-0.5 h-4 w-4 shrink-0">
+            <span class="w-1 bg-[#1ed760] wave-bar-1 rounded-full"></span>
+            <span class="w-1 bg-[#1ed760] wave-bar-2 rounded-full"></span>
+            <span class="w-1 bg-[#1ed760] wave-bar-3 rounded-full"></span>
+          </div>
+        </div>
+
+        <!-- Playlist 2: Éxitos España -->
+        <div class="track-row flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/70 cursor-pointer transition group" data-title="Éxitos España" data-artist="Spotify" data-cover="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=120&h=120&fit=crop">
+          <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=120&h=120&fit=crop" class="w-12 h-12 rounded object-cover shrink-0 shadow" alt="Éxitos España">
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="text-white text-sm font-semibold truncate group-hover:text-[#1ed760] transition">Éxitos España</span>
+            <span class="text-xs text-zinc-400 truncate">Playlist • Spotify</span>
+          </div>
+        </div>
+
+        <!-- Playlist 3: Rock Classics 80s & 90s -->
+        <div class="track-row flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/70 cursor-pointer transition group" data-title="Rock Classics 80s" data-artist="Queen, AC/DC, Guns N' Roses" data-cover="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=120&h=120&fit=crop">
+          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=120&h=120&fit=crop" class="w-12 h-12 rounded object-cover shrink-0 shadow" alt="Rock Classics">
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="text-white text-sm font-semibold truncate group-hover:text-[#1ed760] transition">Rock Classics 80s</span>
+            <span class="text-xs text-zinc-400 truncate">Playlist • Carlos</span>
+          </div>
+        </div>
+
+        <!-- Playlist 4: Daft Punk Complete -->
+        <div class="track-row flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/70 cursor-pointer transition group" data-title="Random Access Memories" data-artist="Daft Punk" data-cover="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=120&h=120&fit=crop">
+          <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=120&h=120&fit=crop" class="w-12 h-12 rounded object-cover shrink-0 shadow" alt="Daft Punk">
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="text-white text-sm font-semibold truncate group-hover:text-[#1ed760] transition">Discovery & RAM</span>
+            <span class="text-xs text-zinc-400 truncate">Álbum • Daft Punk</span>
+          </div>
+        </div>
+
+        <!-- Playlist 5: Lofi Focus & Code -->
+        <div class="track-row flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/70 cursor-pointer transition group" data-title="Lofi Coding Beats" data-artist="ChilledCow / Lofi Girl" data-cover="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=120&h=120&fit=crop">
+          <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=120&h=120&fit=crop" class="w-12 h-12 rounded object-cover shrink-0 shadow" alt="Lofi">
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="text-white text-sm font-semibold truncate group-hover:text-[#1ed760] transition">Lofi Coding Beats</span>
+            <span class="text-xs text-zinc-400 truncate">Playlist • Lofi Girl</span>
+          </div>
+        </div>
+
+        <!-- Playlist 6: After Hours -->
+        <div class="track-row flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/70 cursor-pointer transition group" data-title="Blinding Lights" data-artist="The Weeknd" data-cover="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=120&h=120&fit=crop">
+          <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=120&h=120&fit=crop" class="w-12 h-12 rounded object-cover shrink-0 shadow" alt="The Weeknd">
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="text-white text-sm font-semibold truncate group-hover:text-[#1ed760] transition">After Hours Deluxe</span>
+            <span class="text-xs text-zinc-400 truncate">Álbum • The Weeknd</span>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL CENTRAL -->
+    <main class="bg-gradient-to-b from-emerald-950/40 via-zinc-900 to-zinc-900 rounded-lg overflow-y-auto p-4 sm:p-6 flex flex-col gap-8 border border-white/5 relative">
+      
+      <!-- Filtros Superiores de Categoría -->
+      <div class="flex items-center gap-2 sticky top-0 z-20 -mt-2 pt-2 pb-2 bg-zinc-900/90 backdrop-blur-md">
+        <button class="bg-white text-black font-semibold text-xs sm:text-sm px-4 py-1.5 rounded-full transition shadow">
+          Todos
+        </button>
+        <button class="bg-zinc-800/90 hover:bg-zinc-700 text-white font-semibold text-xs sm:text-sm px-4 py-1.5 rounded-full transition">
+          Música
+        </button>
+        <button class="bg-zinc-800/90 hover:bg-zinc-700 text-white font-semibold text-xs sm:text-sm px-4 py-1.5 rounded-full transition">
+          Podcasts
+        </button>
+      </div>
+
+      <!-- SECCIÓN 1: BUENAS TARDES (MINI TARJETAS 2x3 o 3x2) -->
+      <section>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-4">Buenas tardes</h1>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          
+          <!-- Mini Card 1 -->
+          <div class="card-item group relative flex items-center bg-zinc-800/50 hover:bg-zinc-700/60 rounded-md overflow-hidden cursor-pointer transition shadow-sm" data-title="Éxitos de hoy" data-artist="Dua Lipa, Bad Bunny, Quevedo" data-cover="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=160&h=160&fit=crop">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=160&h=160&fit=crop" class="w-16 h-16 sm:w-20 sm:h-20 object-cover shrink-0" alt="Mix">
+            <span class="px-4 font-bold text-sm truncate flex-1">Éxitos de hoy</span>
+            <button class="play-btn-circle mr-4 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-1 group-hover:translate-y-0 shrink-0">
+              <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Mini Card 2 -->
+          <div class="card-item group relative flex items-center bg-zinc-800/50 hover:bg-zinc-700/60 rounded-md overflow-hidden cursor-pointer transition shadow-sm" data-title="Rock Classics" data-artist="Queen, AC/DC, Nirvana, Aerosmith" data-cover="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=160&h=160&fit=crop">
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=160&h=160&fit=crop" class="w-16 h-16 sm:w-20 sm:h-20 object-cover shrink-0" alt="Rock">
+            <span class="px-4 font-bold text-sm truncate flex-1">Rock Classics</span>
+            <button class="play-btn-circle mr-4 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-1 group-hover:translate-y-0 shrink-0">
+              <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Mini Card 3: Tus me gusta -->
+          <div class="card-item group relative flex items-center bg-zinc-800/50 hover:bg-zinc-700/60 rounded-md overflow-hidden cursor-pointer transition shadow-sm" data-title="Tus me gusta" data-artist="Tus 142 canciones favoritas" data-cover="heart">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-indigo-700 via-indigo-600 to-blue-400 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-heart text-white text-2xl"></i>
+            </div>
+            <span class="px-4 font-bold text-sm truncate flex-1">Tus me gusta</span>
+            <button class="play-btn-circle mr-4 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-1 group-hover:translate-y-0 shrink-0">
+              <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Mini Card 4 -->
+          <div class="card-item group relative flex items-center bg-zinc-800/50 hover:bg-zinc-700/60 rounded-md overflow-hidden cursor-pointer transition shadow-sm" data-title="Daily Mix 1" data-artist="The Weeknd, Daft Punk, Drake" data-cover="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=160&h=160&fit=crop">
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=160&h=160&fit=crop" class="w-16 h-16 sm:w-20 sm:h-20 object-cover shrink-0" alt="Mix 1">
+            <span class="px-4 font-bold text-sm truncate flex-1">Daily Mix 1</span>
+            <button class="play-btn-circle mr-4 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-1 group-hover:translate-y-0 shrink-0">
+              <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Mini Card 5 -->
+          <div class="card-item group relative flex items-center bg-zinc-800/50 hover:bg-zinc-700/60 rounded-md overflow-hidden cursor-pointer transition shadow-sm" data-title="Viva Latino" data-artist="Rauw Alejandro, Mora, Feid" data-cover="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=160&h=160&fit=crop">
+            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=160&h=160&fit=crop" class="w-16 h-16 sm:w-20 sm:h-20 object-cover shrink-0" alt="Latino">
+            <span class="px-4 font-bold text-sm truncate flex-1">Viva Latino</span>
+            <button class="play-btn-circle mr-4 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-1 group-hover:translate-y-0 shrink-0">
+              <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Mini Card 6 -->
+          <div class="card-item group relative flex items-center bg-zinc-800/50 hover:bg-zinc-700/60 rounded-md overflow-hidden cursor-pointer transition shadow-sm" data-title="Lofi Chill Beats" data-artist="ChilledCow, Idealism, Jinsang" data-cover="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=160&h=160&fit=crop">
+            <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=160&h=160&fit=crop" class="w-16 h-16 sm:w-20 sm:h-20 object-cover shrink-0" alt="Lofi">
+            <span class="px-4 font-bold text-sm truncate flex-1">Lofi Chill Beats</span>
+            <button class="play-btn-circle mr-4 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-1 group-hover:translate-y-0 shrink-0">
+              <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: HECHO PARA TI -->
+      <section>
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold hover:underline cursor-pointer">Hecho para ti</h2>
+            <p class="text-xs sm:text-sm text-zinc-400 mt-0.5">Tus mezclas personalizadas basadas en lo que más escuchas.</p>
+          </div>
+          <span class="text-xs font-bold text-zinc-400 hover:underline hover:text-white cursor-pointer shrink-0">Mostrar todo</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          
+          <!-- Card 1 -->
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-3 sm:p-4 rounded-lg cursor-pointer transition group flex flex-col gap-3" data-title="Daily Mix 1" data-artist="Bad Bunny, Rauw Alejandro, Feid" data-cover="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=320&h=320&fit=crop">
+            <div class="relative w-full aspect-square rounded-md overflow-hidden shadow-lg">
+              <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=320&h=320&fit=crop" loading="lazy" alt="Cover" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-11 h-11 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-base"></i>
+              </button>
+            </div>
             <div>
-                <h4 class="font-bold text-sm hover:underline cursor-pointer">Blinding Lights</h4>
-                <p class="text-xs text-zinc-400 hover:underline cursor-pointer">The Weeknd</p>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Daily Mix 1</h3>
+              <p class="text-xs text-zinc-400 line-clamp-2 mt-1">Bad Bunny, Rauw Alejandro, Feid y más.</p>
             </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-3 sm:p-4 rounded-lg cursor-pointer transition group flex flex-col gap-3" data-title="Top Global" data-artist="Los 50 temas más escuchados del planeta" data-cover="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=320&h=320&fit=crop">
+            <div class="relative w-full aspect-square rounded-md overflow-hidden shadow-lg">
+              <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=320&h=320&fit=crop" loading="lazy" alt="Cover" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-11 h-11 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-base"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Top Global</h3>
+              <p class="text-xs text-zinc-400 line-clamp-2 mt-1">Lo más escuchado en todo el mundo ahora mismo.</p>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-3 sm:p-4 rounded-lg cursor-pointer transition group flex flex-col gap-3" data-title="Rock En Español" data-artist="Soda Stereo, Héroes del Silencio, Caifanes" data-cover="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=320&h=320&fit=crop">
+            <div class="relative w-full aspect-square rounded-md overflow-hidden shadow-lg">
+              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=320&h=320&fit=crop" loading="lazy" alt="Cover" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-11 h-11 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-base"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Rock en Español</h3>
+              <p class="text-xs text-zinc-400 line-clamp-2 mt-1">Clásicos inmortales del rock hispanoamericano.</p>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-3 sm:p-4 rounded-lg cursor-pointer transition group flex flex-col gap-3" data-title="After Hours" data-artist="The Weeknd • Max Martin" data-cover="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=320&h=320&fit=crop">
+            <div class="relative w-full aspect-square rounded-md overflow-hidden shadow-lg">
+              <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=320&h=320&fit=crop" loading="lazy" alt="Cover" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-11 h-11 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-base"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">After Hours</h3>
+              <p class="text-xs text-zinc-400 line-clamp-2 mt-1">The Weeknd, Synthwave y ritmos electrónicos.</p>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-3 sm:p-4 rounded-lg cursor-pointer transition group flex flex-col gap-3" data-title="Indie & Alternative" data-artist="Arctic Monkeys, Tame Impala, The Strokes" data-cover="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=320&h=320&fit=crop">
+            <div class="relative w-full aspect-square rounded-md overflow-hidden shadow-lg">
+              <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=320&h=320&fit=crop" loading="lazy" alt="Cover" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-11 h-11 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-base"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Indie & Chill</h3>
+              <p class="text-xs text-zinc-400 line-clamp-2 mt-1">Guitarras y sintetizadores para despejar la mente.</p>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-3 sm:p-4 rounded-lg cursor-pointer transition group flex flex-col gap-3" data-title="Peaceful Piano" data-artist="Ludovico Einaudi, Yiruma, Yann Tiersen" data-cover="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=320&h=320&fit=crop">
+            <div class="relative w-full aspect-square rounded-md overflow-hidden shadow-lg">
+              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=320&h=320&fit=crop" loading="lazy" alt="Cover" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-11 h-11 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-base"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Peaceful Piano</h3>
+              <p class="text-xs text-zinc-400 line-clamp-2 mt-1">Sonidos acústicos y piano para máxima concentración.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: ARTISTAS POPULARES (CIRCULARES) -->
+      <section class="pb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl sm:text-2xl font-bold hover:underline cursor-pointer">Artistas populares</h2>
+          <span class="text-xs font-bold text-zinc-400 hover:underline hover:text-white cursor-pointer shrink-0">Mostrar todo</span>
         </div>
 
-        <!-- Controles de reproducción -->
-        <div class="flex flex-col items-center gap-2 w-2/4 max-w-md">
-            <div class="flex items-center gap-6 text-zinc-400 text-base">
-                <button class="hover:text-white"><i class="fa-solid fa-shuffle"></i></button>
-                <button class="hover:text-white"><i class="fa-solid fa-backward-step"></i></button>
-                <button class="w-8 h-8 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition text-sm"><i class="fa-solid fa-play ml-0.5"></i></button>
-                <button class="hover:text-white"><i class="fa-solid fa-forward-step"></i></button>
-                <button class="hover:text-white"><i class="fa-solid fa-repeat"></i></button>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-4 rounded-lg cursor-pointer transition group flex flex-col items-center text-center gap-3" data-title="Starboy" data-artist="The Weeknd" data-cover="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop">
+            <div class="relative w-full aspect-square rounded-full overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop" loading="lazy" alt="The Weeknd" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+              </button>
             </div>
-            <div class="w-full flex items-center gap-2 text-xs text-zinc-400">
-                <span>0:45</span>
-                <div class="h-1 bg-zinc-800 rounded-full flex-1 overflow-hidden cursor-pointer group">
-                    <div class="h-full bg-white group-hover:bg-green-500 w-1/3"></div>
-                </div>
-                <span>3:20</span>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">The Weeknd</h3>
+              <p class="text-xs text-zinc-400 mt-0.5">Artista • 108.4M oyentes</p>
             </div>
+          </div>
+
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-4 rounded-lg cursor-pointer transition group flex flex-col items-center text-center gap-3" data-title="Monaco" data-artist="Bad Bunny" data-cover="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop">
+            <div class="relative w-full aspect-square rounded-full overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop" loading="lazy" alt="Bad Bunny" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Bad Bunny</h3>
+              <p class="text-xs text-zinc-400 mt-0.5">Artista • 84.2M oyentes</p>
+            </div>
+          </div>
+
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-4 rounded-lg cursor-pointer transition group flex flex-col items-center text-center gap-3" data-title="Cruel Summer" data-artist="Taylor Swift" data-cover="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&h=300&fit=crop">
+            <div class="relative w-full aspect-square rounded-full overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&h=300&fit=crop" loading="lazy" alt="Taylor Swift" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Taylor Swift</h3>
+              <p class="text-xs text-zinc-400 mt-0.5">Artista • 99.1M oyentes</p>
+            </div>
+          </div>
+
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-4 rounded-lg cursor-pointer transition group flex flex-col items-center text-center gap-3" data-title="Get Lucky" data-artist="Daft Punk" data-cover="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&h=300&fit=crop">
+            <div class="relative w-full aspect-square rounded-full overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&h=300&fit=crop" loading="lazy" alt="Daft Punk" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Daft Punk</h3>
+              <p class="text-xs text-zinc-400 mt-0.5">Artista • 26.5M oyentes</p>
+            </div>
+          </div>
+
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-4 rounded-lg cursor-pointer transition group flex flex-col items-center text-center gap-3" data-title="Despechá" data-artist="Rosalía" data-cover="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop">
+            <div class="relative w-full aspect-square rounded-full overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop" loading="lazy" alt="Rosalía" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Rosalía</h3>
+              <p class="text-xs text-zinc-400 mt-0.5">Artista • 31.8M oyentes</p>
+            </div>
+          </div>
+
+          <div class="card-item bg-zinc-800/30 hover:bg-zinc-800/70 p-4 rounded-lg cursor-pointer transition group flex flex-col items-center text-center gap-3" data-title="Bad Guy" data-artist="Billie Eilish" data-cover="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=300&fit=crop">
+            <div class="relative w-full aspect-square rounded-full overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=300&fit=crop" loading="lazy" alt="Billie Eilish" class="w-full h-full object-cover">
+              <button class="play-btn-circle absolute bottom-2 right-2 bg-[#1ed760] text-black w-10 h-10 rounded-full flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 hover:scale-105 transition transform translate-y-2 group-hover:translate-y-0">
+                <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+              </button>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm truncate text-white group-hover:text-[#1ed760] transition">Billie Eilish</h3>
+              <p class="text-xs text-zinc-400 mt-0.5">Artista • 72.3M oyentes</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- SIDEBAR DERECHO: VISTA EN REPRODUCCIÓN (NOW PLAYING) -->
+    <aside class="hidden lg:flex flex-col gap-4 bg-zinc-900/90 rounded-lg p-4 overflow-y-auto text-sm text-zinc-400 select-none border border-white/5">
+      
+      <div class="flex items-center justify-between font-bold text-white mb-1">
+        <span class="text-sm tracking-tight">En reproducción</span>
+        <div class="flex items-center gap-2 text-zinc-400">
+          <button class="hover:text-white transition"><i class="fa-solid fa-ellipsis"></i></button>
+          <button class="hover:text-white transition"><i class="fa-solid fa-xmark text-base"></i></button>
+        </div>
+      </div>
+
+      <!-- Carátula Activa -->
+      <div class="relative w-full aspect-square rounded-lg overflow-hidden shadow-2xl">
+        <img id="sidebarCover" src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400&h=400&fit=crop" alt="Now Playing" class="w-full h-full object-cover">
+      </div>
+
+      <!-- Título y Artista -->
+      <div class="flex items-center justify-between">
+        <div class="min-w-0 pr-2">
+          <h3 id="sidebarTitle" class="font-bold text-base text-white hover:underline cursor-pointer truncate">Blinding Lights</h3>
+          <p id="sidebarArtist" class="text-xs text-zinc-400 hover:underline cursor-pointer truncate mt-0.5">The Weeknd</p>
+        </div>
+        <button id="sidebarHeart" class="text-zinc-400 hover:text-[#1ed760] transition p-1">
+          <i class="fa-regular fa-heart text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Tarjeta "Acerca del Artista" -->
+      <div class="bg-zinc-800/50 hover:bg-zinc-800/80 rounded-xl overflow-hidden p-4 flex flex-col gap-3 transition">
+        <div class="flex items-center justify-between font-bold text-white">
+          <span class="text-xs uppercase tracking-wider text-zinc-400">Acerca del artista</span>
+          <button class="border border-white/20 hover:border-white text-white text-xs px-3 py-1 rounded-full font-semibold transition hover:scale-105">
+            Seguir
+          </button>
         </div>
 
-        <!-- Volumen -->
-        <div class="flex items-center justify-end gap-3 w-1/4 text-zinc-400">
-            <button class="hover:text-white"><i class="fa-solid fa-volume-high"></i></button>
-            <div class="w-20 h-1 bg-zinc-800 rounded-full overflow-hidden cursor-pointer group">
-                <div class="h-full bg-white group-hover:bg-green-500 w-3/4"></div>
-            </div>
+        <div class="flex items-center gap-3">
+          <img id="artistAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-12 h-12 rounded-full object-cover shadow" alt="Artista">
+          <div class="min-w-0">
+            <h4 id="artistName" class="font-bold text-white text-sm truncate">The Weeknd</h4>
+            <p class="text-xs text-zinc-400">108,429,190 oyentes mensuales</p>
+          </div>
         </div>
-    </footer>
 
+        <p class="text-xs text-zinc-400 line-clamp-3 leading-relaxed">
+          Cantante, compositor y productor discográfico canadiense conocido por su versatilidad sónica, letras de exploración emocional y producciones cinemáticas oscuras.
+        </p>
+      </div>
+
+      <!-- Siguiente en cola -->
+      <div class="bg-zinc-800/40 rounded-xl p-3 flex flex-col gap-2">
+        <div class="flex items-center justify-between text-xs font-bold text-white">
+          <span>Siguiente en cola</span>
+          <span class="text-zinc-400 hover:underline cursor-pointer">Abrir cola</span>
+        </div>
+        <div class="flex items-center gap-3 p-1 rounded hover:bg-zinc-700/50 cursor-pointer transition">
+          <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=80&h=80&fit=crop" class="w-10 h-10 rounded object-cover" alt="Cola">
+          <div class="min-w-0 flex-1">
+            <span class="text-xs font-semibold text-white truncate block">Save Your Tears</span>
+            <span class="text-[11px] text-zinc-400 truncate block">The Weeknd</span>
+          </div>
+          <i class="fa-solid fa-bars text-xs text-zinc-500"></i>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- 3. REPRODUCTOR INFERIOR (PLAYER BAR) -->
+  <footer class="h-20 sm:h-22 bg-black px-4 sm:px-6 flex items-center justify-between border-t border-zinc-900 z-30 shrink-0 select-none">
+    
+    <!-- Info Izquierda Canción -->
+    <div class="flex items-center gap-3 w-1/4 min-w-[150px]">
+      <div class="relative group cursor-pointer shrink-0">
+        <img id="playerCover" src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=80&h=80&fit=crop" class="w-12 h-12 sm:w-14 sm:h-14 rounded object-cover shadow-lg" alt="Cover">
+        <div id="coverHeartPlaceholder" class="hidden w-12 h-12 sm:w-14 sm:h-14 rounded bg-gradient-to-br from-indigo-700 via-indigo-600 to-blue-400 flex items-center justify-center">
+          <i class="fa-solid fa-heart text-white text-base"></i>
+        </div>
+      </div>
+      <div class="min-w-0">
+        <h4 id="playerTitle" class="font-bold text-xs sm:text-sm text-white hover:underline cursor-pointer truncate">Blinding Lights</h4>
+        <p id="playerArtist" class="text-[11px] sm:text-xs text-zinc-400 hover:underline cursor-pointer truncate mt-0.5">The Weeknd</p>
+      </div>
+      <button id="playerHeartBtn" class="text-zinc-400 hover:text-[#1ed760] transition px-1 hidden sm:block" title="Guardar en Tus me gusta">
+        <i class="fa-regular fa-heart text-base"></i>
+      </button>
+    </div>
+
+    <!-- Controles Centrales de Reproducción -->
+    <div class="flex flex-col items-center gap-1.5 w-2/4 max-w-xl px-2">
+      <div class="flex items-center gap-4 sm:gap-6 text-zinc-400 text-sm sm:text-base">
+        <button id="shuffleBtn" class="hover:text-white transition" title="Aleatorio">
+          <i class="fa-solid fa-shuffle"></i>
+        </button>
+        <button id="prevBtn" class="hover:text-white transition" title="Anterior">
+          <i class="fa-solid fa-backward-step"></i>
+        </button>
+        <button id="mainPlayBtn" class="w-9 h-9 sm:w-10 sm:h-10 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition shadow-md hover:bg-zinc-100" title="Reproducir">
+          <i id="playIcon" class="fa-solid fa-play ml-0.5 text-sm sm:text-base"></i>
+        </button>
+        <button id="nextBtn" class="hover:text-white transition" title="Siguiente">
+          <i class="fa-solid fa-forward-step"></i>
+        </button>
+        <button id="repeatBtn" class="hover:text-white transition" title="Repetir">
+          <i class="fa-solid fa-repeat"></i>
+        </button>
+      </div>
+
+      <!-- Barra de Progreso y Tiempo -->
+      <div class="w-full flex items-center gap-2 text-[10px] sm:text-xs font-mono text-zinc-400">
+        <span id="currentTime">0:45</span>
+        <div id="progressBar" class="h-1 bg-zinc-800 hover:h-1.5 rounded-full flex-1 overflow-hidden cursor-pointer group transition-all">
+          <div id="progressFill" class="h-full bg-white group-hover:bg-[#1ed760] transition-colors" style="width: 22.5%;"></div>
+        </div>
+        <span id="totalTime">3:20</span>
+      </div>
+    </div>
+
+    <!-- Controles de Volumen y Dispositivos (Derecha) -->
+    <div class="flex items-center justify-end gap-3 w-1/4 text-zinc-400 text-sm">
+      <button class="hover:text-white hidden lg:block" title="Letras"><i class="fa-solid fa-microphone"></i></button>
+      <button class="hover:text-white hidden md:block" title="Cola de reproducción"><i class="fa-solid fa-list-ol"></i></button>
+      <button class="hover:text-white hidden sm:block" title="Conectar a un dispositivo"><i class="fa-solid fa-laptop-medical"></i></button>
+      <button id="muteBtn" class="hover:text-white" title="Silenciar"><i id="volumeIcon" class="fa-solid fa-volume-high"></i></button>
+      <div id="volumeBar" class="w-16 sm:w-24 h-1 bg-zinc-800 hover:h-1.5 rounded-full overflow-hidden cursor-pointer group transition-all">
+        <div id="volumeFill" class="h-full bg-white group-hover:bg-[#1ed760] transition-colors" style="width: 75%;"></div>
+      </div>
+      <button class="hover:text-white hidden xl:block" title="Pantalla completa"><i class="fa-solid fa-up-right-and-down-left-from-center text-xs"></i></button>
+    </div>
+
+  </footer>
+
+  <!-- NOTIFICACIÓN TOAST SPOTIFY -->
+  <div id="spotifyToast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#1ed760] text-black font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-2xl opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center gap-2">
+    <i class="fa-solid fa-check"></i>
+    <span id="toastMsg">Agregado a Tus me gusta</span>
+  </div>
+
+  <!-- SCRIPT DE INTERACTIVIDAD SPOTIFY -->
+  <script>
+    (function() {
+      // Estado del reproductor
+      let isPlaying = false;
+      let currentSeconds = 45;
+      const totalSeconds = 200; // 3:20
+      let timer = null;
+      let isLiked = false;
+      let volume = 75;
+
+      const mainPlayBtn = document.getElementById('mainPlayBtn');
+      const playIcon = document.getElementById('playIcon');
+      const currentTimeEl = document.getElementById('currentTime');
+      const progressFill = document.getElementById('progressFill');
+      const progressBar = document.getElementById('progressBar');
+      
+      const playerTitle = document.getElementById('playerTitle');
+      const playerArtist = document.getElementById('playerArtist');
+      const playerCover = document.getElementById('playerCover');
+      const coverHeartPlaceholder = document.getElementById('coverHeartPlaceholder');
+
+      const sidebarTitle = document.getElementById('sidebarTitle');
+      const sidebarArtist = document.getElementById('sidebarArtist');
+      const sidebarCover = document.getElementById('sidebarCover');
+      const artistAvatar = document.getElementById('artistAvatar');
+      const artistName = document.getElementById('artistName');
+
+      const playerHeartBtn = document.getElementById('playerHeartBtn');
+      const sidebarHeart = document.getElementById('sidebarHeart');
+      const toast = document.getElementById('spotifyToast');
+      const toastMsg = document.getElementById('toastMsg');
+
+      function formatTime(s) {
+        const m = Math.floor(s / 60);
+        const sec = s % 60;
+        return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+      }
+
+      function updateProgress() {
+        currentTimeEl.innerText = formatTime(currentSeconds);
+        const pct = (currentSeconds / totalSeconds) * 100;
+        progressFill.style.width = pct + '%';
+      }
+
+      function togglePlay(forceState) {
+        if (typeof forceState === 'boolean') {
+          isPlaying = forceState;
+        } else {
+          isPlaying = !isPlaying;
+        }
+
+        if (isPlaying) {
+          playIcon.classList.remove('fa-play', 'ml-0.5');
+          playIcon.classList.add('fa-pause');
+          if (!timer) {
+            timer = setInterval(() => {
+              if (currentSeconds < totalSeconds) {
+                currentSeconds++;
+                updateProgress();
+              } else {
+                currentSeconds = 0;
+                togglePlay(false);
+              }
+            }, 1000);
+          }
+        } else {
+          playIcon.classList.remove('fa-pause');
+          playIcon.classList.add('fa-play', 'ml-0.5');
+          if (timer) {
+            clearInterval(timer);
+            timer = null;
+          }
+        }
+      }
+
+      mainPlayBtn.addEventListener('click', () => togglePlay());
+
+      // Barra de progreso interactiva al hacer clic
+      progressBar.addEventListener('click', (e) => {
+        const rect = progressBar.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const pct = Math.max(0, Math.min(1, clickX / rect.width));
+        currentSeconds = Math.floor(pct * totalSeconds);
+        updateProgress();
+      });
+
+      // Volumen interactivo
+      const volumeBar = document.getElementById('volumeBar');
+      const volumeFill = document.getElementById('volumeFill');
+      const volumeIcon = document.getElementById('volumeIcon');
+      const muteBtn = document.getElementById('muteBtn');
+
+      function setVolume(v) {
+        volume = Math.max(0, Math.min(100, v));
+        volumeFill.style.width = volume + '%';
+        if (volume === 0) {
+          volumeIcon.className = 'fa-solid fa-volume-xmark';
+        } else if (volume < 50) {
+          volumeIcon.className = 'fa-solid fa-volume-low';
+        } else {
+          volumeIcon.className = 'fa-solid fa-volume-high';
+        }
+      }
+
+      volumeBar.addEventListener('click', (e) => {
+        const rect = volumeBar.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        setVolume(Math.round(pct * 100));
+      });
+
+      muteBtn.addEventListener('click', () => {
+        if (volume > 0) {
+          setVolume(0);
+        } else {
+          setVolume(75);
+        }
+      });
+
+      // Corazón / Likes
+      function showToast(msg) {
+        toastMsg.innerText = msg;
+        toast.classList.remove('opacity-0', 'translate-y-2');
+        toast.classList.add('opacity-100', 'translate-y-0');
+        setTimeout(() => {
+          toast.classList.add('opacity-0', 'translate-y-2');
+          toast.classList.remove('opacity-100', 'translate-y-0');
+        }, 2500);
+      }
+
+      function toggleLike() {
+        isLiked = !isLiked;
+        const hearts = [playerHeartBtn.querySelector('i'), sidebarHeart.querySelector('i')];
+        hearts.forEach(h => {
+          if (!h) return;
+          if (isLiked) {
+            h.className = 'fa-solid fa-heart text-[#1ed760] text-base animate-bounce';
+            setTimeout(() => h.classList.remove('animate-bounce'), 400);
+          } else {
+            h.className = 'fa-regular fa-heart text-base text-zinc-400';
+          }
+        });
+        showToast(isLiked ? 'Agregado a Tus me gusta' : 'Eliminado de Tus me gusta');
+      }
+
+      playerHeartBtn.addEventListener('click', toggleLike);
+      sidebarHeart.addEventListener('click', toggleLike);
+
+      // Clic en cualquier tarjeta o fila de lista para cambiar canción
+      const allSelectables = document.querySelectorAll('.card-item, .track-row');
+      allSelectables.forEach(item => {
+        item.addEventListener('click', (e) => {
+          const title = item.dataset.title;
+          const artist = item.dataset.artist;
+          const cover = item.dataset.cover;
+
+          if (!title) return;
+
+          playerTitle.innerText = title;
+          playerArtist.innerText = artist;
+          sidebarTitle.innerText = title;
+          sidebarArtist.innerText = artist;
+          artistName.innerText = artist.split(',')[0].split('•')[0].trim();
+
+          if (cover === 'heart') {
+            playerCover.classList.add('hidden');
+            coverHeartPlaceholder.classList.remove('hidden');
+            sidebarCover.src = 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400&h=400&fit=crop';
+          } else {
+            playerCover.classList.remove('hidden');
+            coverHeartPlaceholder.classList.add('hidden');
+            playerCover.src = cover;
+            sidebarCover.src = cover;
+            artistAvatar.src = cover;
+          }
+
+          currentSeconds = 0;
+          updateProgress();
+          togglePlay(true);
+          showToast(`Reproduciendo: ${title}`);
+        });
+      });
+
+      // Botón Shuffle y Repeat
+      const shuffleBtn = document.getElementById('shuffleBtn');
+      const repeatBtn = document.getElementById('repeatBtn');
+      let isShuffle = false;
+      let isRepeat = false;
+
+      shuffleBtn.addEventListener('click', () => {
+        isShuffle = !isShuffle;
+        shuffleBtn.classList.toggle('text-[#1ed760]', isShuffle);
+        shuffleBtn.classList.toggle('text-zinc-400', !isShuffle);
+      });
+
+      repeatBtn.addEventListener('click', () => {
+        isRepeat = !isRepeat;
+        repeatBtn.classList.toggle('text-[#1ed760]', isRepeat);
+        repeatBtn.classList.toggle('text-zinc-400', !isRepeat);
+      });
+
+      // Búsqueda interactiva en tiempo real en la página
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('input', (e) => {
+        const val = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.card-item');
+        cards.forEach(c => {
+          const t = (c.dataset.title || '').toLowerCase();
+          const a = (c.dataset.artist || '').toLowerCase();
+          if (!val || t.includes(val) || a.includes(val)) {
+            c.style.display = '';
+          } else {
+            c.style.display = 'none';
+          }
+        });
+      });
+
+    })();
+  </script>
 </body>
 </html>
